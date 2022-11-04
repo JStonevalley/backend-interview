@@ -34,6 +34,14 @@ app.get('/', (req, res) => {
   res.send('Hello World')
 })
 
+app.post('/item', async ({ body: { description, images } }, res) => {
+  res.send(await Item.create({ description, images }))
+})
+
+app.get('/item/:id?', async ({ params: { id } }, res) => {
+  res.send(await (id ? Item.findById(id) : Item.find({})))
+})
+
 routes(app)
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
