@@ -12,5 +12,24 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "52752f84-982f-491a-89da-20521201fff2",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Create Item",
+    "url": "http://localhost:3000/item",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-11-07T07:48:51.546Z",
+    "modified": "2022-11-07T07:48:51.546Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"description\": \"Beautiful Item\",\n  \"images\": [\"https://images.squarespace-cdn.com/content/v1/61dcd32b3fb8bb4b5af9b560/58f3452e-9306-4fcd-bc3a-09f96cbee7aa/Allbirds+Shoes\"]\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

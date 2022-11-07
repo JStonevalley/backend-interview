@@ -2,37 +2,31 @@ const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
-const crypto = require('crypto')
 const { Item } = require('./models')
 const routes = require('./routes')
 
+const DB_NAME = 'DemoDB'
 const PORT = 3000
+let mongod 
 
 const initiateDb = async () => {
-  const mongod = await MongoMemoryServer.create()
+  mongod = new MongoMemoryServer({
+    instance: {
+      dbName: DB_NAME,
+      dbPath: 'data',
+      storageEngine: 'wiredTiger'
+    }
+  })
+  await mongod.start()
 
   const uri = mongod.getUri()
-  await mongoose.connect(uri, { dbName: 'DemoDB' })
+  await mongoose.connect(uri, { dbName: DB_NAME })
   console.log('Connected to db', uri)
-  await createInitialData()
-}
-
-const createInitialData = async () => {
-
-  await Promise.all([
-    Item.create({ description: 'A very nice button-down shirt', images: [`http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`, `http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`] }),
-    Item.create({ description: 'A pair of pants', images: [`http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`, `http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`] }),
-    Item.create({ description: 'This is a dress', images: [`http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`, `http://example.image-${crypto.randomBytes(4).toString('hex')}.jpg`] })
-  ])
-  console.log('Finished creating initial data')
 }
 
 initiateDb()
 
 app.use(express.json())
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
 
 app.post('/item', async ({ body: { description, images } }, res) => {
   res.send(await Item.create({ description, images }))
@@ -44,4 +38,14 @@ app.get('/item/:id?', async ({ params: { id } }, res) => {
 
 routes(app)
 
-app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
+const server = app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
+process.on('SIGTERM', () => {
+  console.info('SIGTERM signal received.')
+  console.log('Closing http server.')
+  server.close(async (err) => {
+    console.log('server closed')
+    await mongod.stop()
+    process.exit(err ? 1 : 0)
+  })
+})
+
