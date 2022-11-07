@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "255de0fa-51a6-4a7d-b374-73defaca7f72",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Get Items",
+    "url": "http://localhost:3000/items",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2022-11-07T07:43:44.458Z",
+    "modified": "2022-11-07T07:43:44.458Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]
