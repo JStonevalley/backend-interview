@@ -201,5 +201,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "f0095fbe-5f9d-45bd-ba3a-855996c0770b",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/item-offer/DKK",
+    "url": "http://localhost:3000/item-offer/DKK",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-11-08T15:36:12.995Z",
+    "modified": "2022-11-08T15:37:26.997Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

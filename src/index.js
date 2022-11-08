@@ -55,6 +55,10 @@ app.get('/item-sale/:itemId', async ({ params: { itemId } }, res) => {
   res.send(activeItemOffers)
 })
 
+app.get('/item-offer/:currency', async ({ params: { currency } }, res) => {
+  res.send(await ItemOffer.find({ 'price.currency': currency, endedAt: { $exists: false } }))
+})
+
 
 routes(app)
 
