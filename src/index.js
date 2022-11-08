@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
-const { Item, ItemSale } = require('./models')
+const { Item, ItemSale, ItemOffer } = require('./models')
 const routes = require('./routes')
 const { initiateMongoose } = require('./database')
+const { CONVERSION_RATES, convert } = require('./utils')
 
 const PORT = 3000
 const mongod = initiateMongoose()
@@ -26,16 +27,42 @@ app.post('/item-sale/start', async ({ body: { itemId, value } }, res) => {
     item: item._id,
     value
   })
+  await Promise.all(Object.keys(CONVERSION_RATES).map((currency) => {
+    return ItemOffer.create({
+      itemSale: itemSale._id,
+      price: convert(itemSale.value)(currency)
+    })
+  }))
   res.send(itemSale)
 })
 
-app.put('/item-sale/end', async ({ body: { itemId } }, res) => {
+const getOffersForActiveItemSale = async (itemId) => {
   const activeItemSale = await ItemSale.findOne({ item: itemId, endedAt: { $exists: false }})
-  if (!activeItemSale) return res.status(400).send({ message: `Item is not for sale` })
-  activeItemSale.endedAt = new Date()
-  await activeItemSale.save()
-  res.send(activeItemSale)
+  if (!activeItemSale) throw new Error('Item is not for sale') 
+  return ItemOffer.find({ itemSale: activeItemSale._id}).populate('itemSale').exec()
+}
+
+app.put('/item-sale/end', async ({ body: { itemId } }, res) => {
+  try {
+    const activeItemOffers = await getOffersForActiveItemSale(itemId)
+    await Promise.all(activeItemOffers.map((itemOffer) => {
+      itemOffer.set('endedAt', new Date())
+      return itemOffer.save()
+    }))
+    res.send(await ItemSale.findByIdAndUpdate(activeItemOffers[0].itemSale._id, { endedAt: new Date() }))
+  } catch (error) {
+    return res.status(400).send({ message: error.message })
+  }
 })
+
+app.get('/item-sale/:itemId', async ({ params: { itemId } }, res) => {
+  try {
+    res.send(await getOffersForActiveItemSale(itemId))
+  } catch (error) {
+    return res.status(400).send({ message: error.message })
+  }
+})
+
 
 routes(app)
 

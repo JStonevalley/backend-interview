@@ -13,13 +13,15 @@ const CONVERSION_RATES = {
   }
 }
 
-const convert = ({ value, currency }) => (toCurrency) => {
-  if (!value || !currency) throw new Error('value and currency is required for conversion')
+const convert = ({ amount, currency }) => (toCurrency) => {
+  if (!amount || !currency) throw new Error('value and currency is required for conversion')
+  if (currency === toCurrency) return { amount, currency }
   const rate = CONVERSION_RATES[currency]?.[toCurrency]
   if (!rate) throw new Error('Non-supported currency')
-  return { value: Math.round(value * rate * 100) / 100, currency: toCurrency }
+  return { amount: Math.round(amount * rate * 100) / 100, currency: toCurrency }
 }
 
 module.exports = {
-  convert
+  convert,
+  CONVERSION_RATES
 }

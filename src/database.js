@@ -28,6 +28,7 @@ const dropDb = async () => {
   await mongoose.connection.dropDatabase()
   await mongoose.connection.close()
   await mongod.stop()
+  console.log(`Database "${DB_NAME}" dropped`)
 }
 
 module.exports = {
