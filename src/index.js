@@ -59,6 +59,12 @@ app.get('/item-offer/:currency', async ({ params: { currency } }, res) => {
   res.send(await ItemOffer.find({ 'price.currency': currency, endedAt: { $exists: false } }))
 })
 
+app.put('/cart/add', async ({ body: { cartId, itemOfferId } }, res) => {
+  const itemOffer = await ItemOffer.findById(itemOfferId).populate('cart')
+  if (itemOffer.cart && cartId !== itemOffer.cart) return res.status(400).send({ message: 'Item is already in another cart' })
+  if ()
+})
+
 
 routes(app)
 
