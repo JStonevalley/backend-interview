@@ -1,30 +1,11 @@
-const { MongoMemoryServer } = require('mongodb-memory-server')
-const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
-const { Item } = require('./models')
+const { Item, ItemSale } = require('./models')
 const routes = require('./routes')
+const { initiateMongoose } = require('./database')
 
-const DB_NAME = 'DemoDB'
 const PORT = 3000
-let mongod 
-
-const initiateDb = async () => {
-  mongod = new MongoMemoryServer({
-    instance: {
-      dbName: DB_NAME,
-      dbPath: 'data',
-      storageEngine: 'wiredTiger'
-    }
-  })
-  await mongod.start()
-
-  const uri = mongod.getUri()
-  await mongoose.connect(uri, { dbName: DB_NAME })
-  console.log('Connected to db', uri)
-}
-
-initiateDb()
+const mongod = initiateMongoose()
 
 app.use(express.json())
 
@@ -34,6 +15,26 @@ app.post('/item', async ({ body: { description, images } }, res) => {
 
 app.get('/item/:id?', async ({ params: { id } }, res) => {
   res.send(await (id ? Item.findById(id) : Item.find({})))
+})
+
+app.post('/item-sale/start', async ({ body: { itemId, value } }, res) => {
+  const item = await Item.findById(itemId)
+  if (!item) return res.status(400).send({ message: `No such item (${itemId})` })
+  const activeItemSale = await ItemSale.findOne({ item: item._id, endedAt: { $exists: false }})
+  if (activeItemSale) return res.status(400).send({ message: `Item is already selling in sale (${activeItemSale._id})` })
+  const itemSale = await ItemSale.create({
+    item: item._id,
+    value
+  })
+  res.send(itemSale)
+})
+
+app.put('/item-sale/end', async ({ body: { itemId } }, res) => {
+  const activeItemSale = await ItemSale.findOne({ item: itemId, endedAt: { $exists: false }})
+  if (!activeItemSale) return res.status(400).send({ message: `Item is not for sale` })
+  activeItemSale.endedAt = new Date()
+  await activeItemSale.save()
+  res.send(activeItemSale)
 })
 
 routes(app)

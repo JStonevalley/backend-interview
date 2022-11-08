@@ -6,7 +6,7 @@ const itemSchema = new Schema({
 })
 
 const itemSaleSchema = new Schema({
-  item: String,
+  item: { type: Schema.Types.ObjectId, ref: 'Item' },
   value: {
     amount: Number,
     currency: String
@@ -15,7 +15,7 @@ const itemSaleSchema = new Schema({
 })
 
 const itemOfferSchema = new Schema({
-  itemSale: String,
+  itemSale: { type: Schema.Types.ObjectId, ref: 'ItemSale' },
   price: {
     amount: Number,
     currency: String

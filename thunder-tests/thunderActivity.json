@@ -69,5 +69,81 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "d013253a-55d4-44b8-8799-c1c724edf88b",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/item/sell",
+    "url": "http://localhost:3000/item/sell",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-11-07T08:54:34.940Z",
+    "modified": "2022-11-07T08:56:14.839Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemId\": \"6368b9c874435264ea771511\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ac694050-108c-4380-bc65-722452959d1c",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/item/sell",
+    "url": "http://localhost:3000/item/sell",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-11-07T08:56:40.113Z",
+    "modified": "2022-11-08T07:13:09.452Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemId\": \"636a012f3c2d9b8f009dbb4c\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ac0f2d9e-add7-4873-bf13-b27a8c78a065",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/item-sale/start",
+    "url": "http://localhost:3000/item-sale/start",
+    "method": "PUT",
+    "sortNum": 0,
+    "created": "2022-11-08T07:26:22.227Z",
+    "modified": "2022-11-08T07:26:22.253Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemSaleId\": \"636a01853c2d9b8f009dbb50\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "909b5c7e-30b8-44fa-b50c-87b11eca0a50",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/item-sale/end",
+    "url": "http://localhost:3000/item-sale/end",
+    "method": "PUT",
+    "sortNum": 0,
+    "created": "2022-11-08T07:26:28.220Z",
+    "modified": "2022-11-08T07:29:04.954Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemId\": \"636a012f3c2d9b8f009dbb4c\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

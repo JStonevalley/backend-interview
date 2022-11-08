@@ -31,5 +31,43 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "ac623f06-6a65-4494-85ae-e176a9fec23b",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Start item sale",
+    "url": "http://localhost:3000/item-sale/start",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2022-11-08T07:15:34.123Z",
+    "modified": "2022-11-08T07:18:31.876Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemId\": \"636a012f3c2d9b8f009dbb4c\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "cdcd24eb-8648-4368-97ac-b4aa30858699",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "End item sale",
+    "url": "http://localhost:3000/item-sale/end",
+    "method": "PUT",
+    "sortNum": 40000,
+    "created": "2022-11-08T07:29:22.355Z",
+    "modified": "2022-11-08T07:29:22.355Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemId\": \"636a012f3c2d9b8f009dbb4c\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]
