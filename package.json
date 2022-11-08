@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint --ext .js src",
     "start": "nodemon --ignore 'data/*' --ignore thunder-tests/* src/index.js",
-    "test": "node node_modules/jest/bin/jest.js"
+    "test": "node node_modules/jest/bin/jest.js",
+    "drop-db": "node src/drop-db.js"
   },
   "dependencies": {
     "express": "^4.18.2",
