@@ -36,31 +36,23 @@ app.post('/item-sale/start', async ({ body: { itemId, value } }, res) => {
   res.send(itemSale)
 })
 
-const getOffersForActiveItemSale = async (itemId) => {
-  const activeItemSale = await ItemSale.findOne({ item: itemId, endedAt: { $exists: false }})
-  if (!activeItemSale) throw new Error('Item is not for sale') 
-  return ItemOffer.find({ itemSale: activeItemSale._id}).populate('itemSale').exec()
-}
-
 app.put('/item-sale/end', async ({ body: { itemId } }, res) => {
-  try {
-    const activeItemOffers = await getOffersForActiveItemSale(itemId)
-    await Promise.all(activeItemOffers.map((itemOffer) => {
-      itemOffer.set('endedAt', new Date())
-      return itemOffer.save()
-    }))
-    res.send(await ItemSale.findByIdAndUpdate(activeItemOffers[0].itemSale._id, { endedAt: new Date() }))
-  } catch (error) {
-    return res.status(400).send({ message: error.message })
-  }
+  const activeItemSale = await ItemSale.findOne({ item: itemId, endedAt: { $exists: false }})
+  if (!activeItemSale) return res.status(400).send({ message: 'Item is not for sale' })
+  const activeItemOffers = await ItemOffer.find({ itemSale: activeItemSale._id})
+  await Promise.all(activeItemOffers.map((itemOffer) => {
+    itemOffer.set('endedAt', new Date())
+    return itemOffer.save()
+  }))
+  activeItemSale.endedAt = new Date()
+  res.send(await activeItemSale.save())
 })
 
 app.get('/item-sale/:itemId', async ({ params: { itemId } }, res) => {
-  try {
-    res.send(await getOffersForActiveItemSale(itemId))
-  } catch (error) {
-    return res.status(400).send({ message: error.message })
-  }
+  const activeItemSale = await ItemSale.findOne({ item: itemId, endedAt: { $exists: false }})
+  if (!activeItemSale) return res.status(400).send({ message: 'Item is not for sale' })
+  const activeItemOffers = await ItemOffer.find({ itemSale: activeItemSale._id}).populate('itemSale').exec()
+  res.send(activeItemOffers)
 })
 
 

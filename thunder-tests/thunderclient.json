@@ -41,12 +41,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-11-08T07:15:34.123Z",
-    "modified": "2022-11-08T14:02:38.401Z",
+    "modified": "2022-11-08T14:25:45.534Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itemId\": \"636a6179069330c490752f30\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
+      "raw": "{\n  \"itemId\": \"636a66e46148e30b4a5b6073\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -60,12 +60,12 @@
     "method": "PUT",
     "sortNum": 40000,
     "created": "2022-11-08T07:29:22.355Z",
-    "modified": "2022-11-08T14:02:47.951Z",
+    "modified": "2022-11-08T14:26:11.846Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itemId\": \"636a6179069330c490752f30\"\n}",
+      "raw": "{\n  \"itemId\": \"636a66e46148e30b4a5b6073\"\n}",
       "form": []
     },
     "tests": []
@@ -75,11 +75,11 @@
     "colId": "01235534-e066-414d-b63f-16c149d35e7e",
     "containerId": "",
     "name": "Get Item Sale",
-    "url": "http://localhost:3000/item-sale/636a6179069330c490752f30",
+    "url": "http://localhost:3000/item-sale/636a66e46148e30b4a5b6073",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-08T13:41:14.969Z",
-    "modified": "2022-11-08T14:02:42.999Z",
+    "modified": "2022-11-08T14:26:01.835Z",
     "headers": [],
     "params": [],
     "tests": []
