@@ -60,7 +60,7 @@ app.get('/item-offer/:currency', async ({ params: { currency } }, res) => {
   res.send(await ItemOffer.find({ 'price.currency': currency, endedAt: { $exists: false } }))
 })
 
-app.put('/reservation', async ({ body: { cartId, itemOfferId } }, res) => {
+app.post('/reservation/create', async ({ body: { cartId, itemOfferId } }, res) => {
   const itemOffer = await ItemOffer.findById(itemOfferId)
   if (!itemOffer) res.status(400).send({ message: 'No such ItemOffer' })
   const existingReservation = await Reservation.findOne({ itemOffer: itemOfferId, removedAt: { $exists: false }})
