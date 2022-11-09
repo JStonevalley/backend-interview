@@ -41,12 +41,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-11-08T07:15:34.123Z",
-    "modified": "2022-11-08T14:25:45.534Z",
+    "modified": "2022-11-09T10:18:29.372Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"itemId\": \"636a66e46148e30b4a5b6073\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
+      "raw": "{\n  \"itemId\": \"636b7e6e85a3eb5f1931de41\",\n  \"value\": {\n    \"amount\": 10000,\n    \"currency\": \"SEK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -96,6 +96,63 @@
     "modified": "2022-11-08T15:38:01.446Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "9d9d3623-d344-45f9-94e7-c39f97b9d0f9",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Create reservation",
+    "url": "http://localhost:3000/reservation",
+    "method": "PUT",
+    "sortNum": 70000,
+    "created": "2022-11-09T08:27:57.943Z",
+    "modified": "2022-11-09T10:19:44.279Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemOfferId\": \"636b7e7585a3eb5f1931de49\",\n  \"cartId\": \"636b64adab1024a914cdc995\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "af03885d-b7ad-408a-ab7c-7ac9a3c4bea0",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Get reservations",
+    "url": "http://localhost:3000/reservations/636b64adab1024a914cdc995",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-11-09T09:08:17.645Z",
+    "modified": "2022-11-09T09:08:17.645Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemOfferId\": \"636b5d891b9c3c1976b42978\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f000104c-e210-4dd3-9383-9f47dea4f31c",
+    "colId": "01235534-e066-414d-b63f-16c149d35e7e",
+    "containerId": "",
+    "name": "Get Cart",
+    "url": "http://localhost:3000/cart/636b64adab1024a914cdc995",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2022-11-09T09:11:57.852Z",
+    "modified": "2022-11-09T09:11:57.852Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"itemOfferId\": \"636b5d891b9c3c1976b42978\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

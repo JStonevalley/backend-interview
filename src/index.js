@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
-const { Item, ItemSale, ItemOffer } = require('./models')
+const { Item, ItemSale, ItemOffer, Reservation } = require('./models')
 const routes = require('./routes')
 const { initiateMongoose } = require('./database')
 const { CONVERSION_RATES, convert } = require('./utils')
+const mongoose = require('mongoose')
 
 const PORT = 3000
 const mongod = initiateMongoose()
@@ -59,10 +60,47 @@ app.get('/item-offer/:currency', async ({ params: { currency } }, res) => {
   res.send(await ItemOffer.find({ 'price.currency': currency, endedAt: { $exists: false } }))
 })
 
-app.put('/cart/add', async ({ body: { cartId, itemOfferId } }, res) => {
-  const itemOffer = await ItemOffer.findById(itemOfferId).populate('cart')
-  if (itemOffer.cart && cartId !== itemOffer.cart) return res.status(400).send({ message: 'Item is already in another cart' })
-  if ()
+app.put('/reservation', async ({ body: { cartId, itemOfferId } }, res) => {
+  const itemOffer = await ItemOffer.findById(itemOfferId)
+  if (!itemOffer) res.status(400).send({ message: 'No such ItemOffer' })
+  const existingReservation = await Reservation.findOne({ itemOffer: itemOfferId, removedAt: { $exists: false }})
+  if (existingReservation) {
+    if (existingReservation.cartId === cartId) return existingReservation
+    else return res.status(400).send({ message: 'Item is already reserved' })
+  }
+  res.send(await Reservation.create({
+    itemOffer: itemOffer._id,
+    cartId: cartId || new mongoose.Types.ObjectId()
+  }))
+})
+
+app.get('/reservations/:cartId', async ({ params: { cartId } }, res) => {
+  res.send(await Reservation.find({ cartId, removedAt: { $exists: false }}))
+})
+
+app.get('/cart/:cartId', async ({ params: { cartId } }, res) => {
+  const reservations = await Reservation
+    .find({ cartId, removedAt: { $exists: false }})
+    .populate({
+      path : 'itemOffer',
+      populate : {
+        path : 'itemSale',
+        populate : {
+          path : 'item'
+        }
+      }
+    })
+  const cartItems = reservations.map((reservation) => ({
+    description: reservation.itemOffer.itemSale.item.description,
+    images: reservation.itemOffer.itemSale.item.images,
+    price: reservation.itemOffer.price
+  }))
+  res.send({
+    items: cartItems,
+    price: cartItems
+      .map((item) => item.price)
+      .reduce((totalPrice, price) => ({ amount: totalPrice.amount + price.amount, currency: totalPrice.currency }))
+  })
 })
 
 

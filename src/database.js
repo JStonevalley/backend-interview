@@ -2,12 +2,14 @@ const { MongoMemoryServer } = require('mongodb-memory-server')
 const mongoose = require('mongoose')
 
 const DB_NAME = 'DemoDB'
+const PORT = 51000
 
 const initiateDb = async () => {
   const mongod = new MongoMemoryServer({
     instance: {
       dbName: DB_NAME,
       dbPath: 'data',
+      port: PORT,
       storageEngine: 'wiredTiger'
     }
   })

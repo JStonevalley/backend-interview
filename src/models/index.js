@@ -23,9 +23,16 @@ const itemOfferSchema = new Schema({
   endedAt: Date
 })
 
+const reservationSchema = new Schema({
+  itemOffer: { type: Schema.Types.ObjectId, ref: 'ItemOffer' },
+  removedAt: Date,
+  cartId: String
+})
+
 
 module.exports = {
   Item: model('Item', itemSchema),
   ItemSale: model('ItemSale', itemSaleSchema),
-  ItemOffer: model('ItemOffer', itemOfferSchema)
+  ItemOffer: model('ItemOffer', itemOfferSchema),
+  Reservation: model('Reservation', reservationSchema)
 }
